@@ -7,7 +7,7 @@ using Zenject;
 namespace Diplom.Views.Player.UI
 {
   [RequireComponent(typeof(TMP_Text))]
-  public class PlayerResultTimeView : MonoBehaviour
+  public class PlayerResultTimeTextView : MonoBehaviour
   {
     private TMP_Text _text;
     private IPlayerStatsPresenter _presenter;
