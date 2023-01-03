@@ -1,16 +1,17 @@
 using Diplom.Presenters.Level;
+using Diplom.ScriptableObjects;
 using UnityEngine;
 using Zenject;
 
 namespace Diplom.Installers
 {
-    public class LevelInstaller : MonoInstaller
+    public class LevelBuilderInstaller : MonoInstaller
     {
         [SerializeField] private LevelBuilderPresenter _levelBuilderPresenter;
         
         public override void InstallBindings()
         {
-            Container.Bind<ILevelBuilderPresenter>().FromInstance(_levelBuilderPresenter);
+            Container.Bind<ILevelBuilderPresenter>().FromInstance(_levelBuilderPresenter).AsSingle();
         }
     }
 }

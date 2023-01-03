@@ -1,20 +1,24 @@
-﻿using UnityEditor;
+﻿using Diplom.Entities;
+using Diplom.Presenters.Level;
+using UnityEditor;
 using UnityEngine.SceneManagement;
 
 namespace Diplom.Presenters.MenuSceneUI
 {
   public class MenuUIPresenter : IMenuUIPresenter
   {
-    private IMenuSceneUIPresenter _menuSceneUIPresenter;
-    
-    public void Initialize(IMenuSceneUIPresenter menuSceneUIPresenter)
+    private readonly IMenuSceneUIPresenter _menuSceneUIPresenter;
+    private readonly ILevelLoaderPresenter _levelLoaderPresenter;
+
+    public MenuUIPresenter(IMenuSceneUIPresenter menuSceneUIPresenter, ILevelLoaderPresenter levelLoaderPresenter)
     {
       _menuSceneUIPresenter = menuSceneUIPresenter;
+      _levelLoaderPresenter = levelLoaderPresenter;
     }
     
     public void StartGame()
     {
-      SceneManager.LoadSceneAsync(1);
+      _levelLoaderPresenter.LoadLevel(LevelType.LevelHard);
     }
 
     public void OpenSettings()

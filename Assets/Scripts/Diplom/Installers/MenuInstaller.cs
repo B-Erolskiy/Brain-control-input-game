@@ -1,3 +1,4 @@
+using Diplom.Presenters.Level;
 using Diplom.Presenters.MenuSceneUI;
 using Zenject;
 
@@ -11,9 +12,7 @@ namespace Diplom.Installers
             menuSceneUIPresenter.Initialize();
             Container.Bind<IMenuSceneUIPresenter>().FromInstance(menuSceneUIPresenter);
 
-            var menuUIPresenter = new MenuUIPresenter();
-            menuUIPresenter.Initialize(menuSceneUIPresenter);
-            Container.Bind<IMenuUIPresenter>().FromInstance(menuUIPresenter);
+            Container.Bind<IMenuUIPresenter>().To<MenuUIPresenter>().AsSingle();
         }
     }
 }
