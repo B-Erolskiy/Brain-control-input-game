@@ -20368,6 +20368,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelBuilderPresenter: {fileID: 1399587212}
+  _levelCollectionObject: {fileID: 11400000, guid: f0a3965c7294efd4280d542a2b624df5,
+    type: 2}
 --- !u!1 &2131993452
 GameObject:
   m_ObjectHideFlags: 0

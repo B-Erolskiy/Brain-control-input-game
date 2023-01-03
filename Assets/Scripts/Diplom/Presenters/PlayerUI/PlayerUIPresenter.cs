@@ -1,16 +1,15 @@
 ﻿using System;
+using Diplom.Entities;
+using Diplom.Presenters.Level;
 using Diplom.Usecases.Player;
 using UniRx;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace Diplom.Presenters.PlayerUI
 {
   public class PlayerUIPresenter : IPlayerUIPresenter, IDisposable
   {
-    public const int MenuSceneID = 0;
-    public const int GameSceneID = 1;
-    
     public IReadOnlyReactiveProperty<bool> IsInGameScreenActive => _isInGameScreenActive;
     private readonly ReactiveProperty<bool> _isInGameScreenActive = new ReactiveProperty<bool>();
     public IReadOnlyReactiveProperty<bool> IsSettingsScreenActive => _isSettingsScreenActive;
@@ -19,17 +18,17 @@ namespace Diplom.Presenters.PlayerUI
     private readonly ReactiveProperty<bool> _isLoseScreenActive = new ReactiveProperty<bool>();
     public IReadOnlyReactiveProperty<bool> IsPauseScreenActive => _isPauseScreenActive;
     private readonly ReactiveProperty<bool> _isPauseScreenActive = new ReactiveProperty<bool>();
+
+    private readonly ILevelLoaderPresenter _levelLoaderPresenter;
+    private readonly IDisposable _playerSubscribe;
     
-    private IPlayerUsecase _usecase;
-    private IDisposable _playerSubscribe;
-    
-    public void Initialize(IPlayerUsecase usecase)
+    [Inject]
+    public PlayerUIPresenter(IPlayerUsecase usecase, ILevelLoaderPresenter levelLoaderPresenter)
     {
-      _usecase = usecase;
+      _levelLoaderPresenter = levelLoaderPresenter;
 
-      _playerSubscribe = _usecase.Player.Subscribe(UpdatePlayerData);
-
-      UpdatePlayerData(_usecase.Player.Value);
+      _playerSubscribe = usecase.Player.Subscribe(UpdatePlayerData);
+      UpdatePlayerData(usecase.Player.Value);
       
       ClosePauseScreen();
       CloseLoseScreen();
@@ -84,13 +83,13 @@ namespace Diplom.Presenters.PlayerUI
 
     public void QuitGame()
     {
-      SceneManager.LoadSceneAsync(MenuSceneID);
+      _levelLoaderPresenter.LoadLevel(LevelType.Menu);
     }
 
     public void ReplayGame()
     {
       Time.timeScale = 1;
-      SceneManager.LoadSceneAsync(GameSceneID);
+      _levelLoaderPresenter.LoadLevel(LevelType.LevelHard);
     }
 
     public void OpenInGameScreen()
