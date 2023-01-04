@@ -1,4 +1,6 @@
-﻿namespace Diplom.Entities.Level
+﻿using UnityEngine.SceneManagement;
+
+namespace Diplom.Entities.Level
 {
   public class Level
   {

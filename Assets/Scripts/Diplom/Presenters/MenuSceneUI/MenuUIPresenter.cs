@@ -2,6 +2,10 @@
 using Diplom.Presenters.Level;
 using UnityEditor;
 
+#if !UNITY_EDITOR
+using UnityEngine;
+#endif
+
 namespace Diplom.Presenters.MenuSceneUI
 {
   public class MenuUIPresenter : IMenuUIPresenter
@@ -14,8 +18,13 @@ namespace Diplom.Presenters.MenuSceneUI
       _menuSceneUIPresenter = menuSceneUIPresenter;
       _levelLoaderPresenter = levelLoaderPresenter;
     }
-    
-    public void StartGame()
+
+    public void StartEasyLevel()
+    {
+      _levelLoaderPresenter.LoadLevel(LevelType.LevelEasy);
+    }
+
+    public void StartHardLevel()
     {
       _levelLoaderPresenter.LoadLevel(LevelType.LevelHard);
     }
@@ -29,7 +38,7 @@ namespace Diplom.Presenters.MenuSceneUI
     {
 #if UNITY_EDITOR
         EditorApplication.isPaused = true;
-  #else
+#else
         Application.Quit();
   #endif
     }

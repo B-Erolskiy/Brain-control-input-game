@@ -89,7 +89,7 @@ namespace Diplom.Presenters.PlayerUI
     public void ReplayGame()
     {
       Time.timeScale = 1;
-      _levelLoaderPresenter.LoadLevel(LevelType.LevelHard);
+      _levelLoaderPresenter.ReloadCurrentLevel();
     }
 
     public void OpenInGameScreen()
