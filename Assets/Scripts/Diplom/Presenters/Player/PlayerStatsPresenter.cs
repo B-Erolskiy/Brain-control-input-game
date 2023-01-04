@@ -1,6 +1,8 @@
 ﻿using System;
+using Diplom.Presenters.Input;
 using Diplom.Usecases.Player;
 using UniRx;
+using UnityEngine;
 
 namespace Diplom.Presenters.Player
 {
@@ -8,14 +10,13 @@ namespace Diplom.Presenters.Player
   {
     public IReadOnlyReactiveProperty<float> ForwardSpeed => _forwardSpeed;
     private readonly ReactiveProperty<float> _forwardSpeed = new ReactiveProperty<float>();
-    public IReadOnlyReactiveProperty<float> HorizontalSpeed => _horizontalSpeed;
-    private readonly ReactiveProperty<float> _horizontalSpeed = new ReactiveProperty<float>();
-    public IReadOnlyReactiveProperty<float> HorizontalMovement => _horizontalMovement;
-    private readonly ReactiveProperty<float> _horizontalMovement = new ReactiveProperty<float>();
-    public IReadOnlyReactiveProperty<float> Progress => _progress;
-    private readonly ReactiveProperty<float> _progress = new ReactiveProperty<float>();
-    public IReadOnlyReactiveProperty<float> Health => _health;
-    private readonly ReactiveProperty<float> _health = new ReactiveProperty<float>();
+    private float _horizontalSpeed, _horizontalMovement;
+    public IReadOnlyReactiveProperty<Vector3> HorizontalForce => _horizontalForce;
+    private readonly ReactiveProperty<Vector3> _horizontalForce = new ReactiveProperty<Vector3>();
+    public IReadOnlyReactiveProperty<int> Progress => _progress;
+    private readonly ReactiveProperty<int> _progress = new ReactiveProperty<int>();
+    public IReadOnlyReactiveProperty<int> Health => _health;
+    private readonly ReactiveProperty<int> _health = new ReactiveProperty<int>();
     public IReadOnlyReactiveProperty<DateTime> StartTime => _startTime;
     private readonly ReactiveProperty<DateTime> _startTime = new ReactiveProperty<DateTime>();
     public IReadOnlyReactiveProperty<DateTime> EndTime => _endTime;
@@ -23,19 +24,32 @@ namespace Diplom.Presenters.Player
     public IReadOnlyReactiveProperty<bool> IsDead => _isDead;
     private readonly ReactiveProperty<bool> _isDead = new ReactiveProperty<bool>();
     
-    private IPlayerUsecase _usecase;
-    private IDisposable _playerSubscribe;
+    private readonly IPlayerUsecase _usecase;
+    private readonly IDisposable _playerSubscribe, _inputHorizontalMovementSubscribe;
     
-    public void Initialize(IPlayerUsecase usecase)
+    public PlayerStatsPresenter(IPlayerUsecase usecase, IInputPresenter inputPresenter)
     {
       _usecase = usecase;
 
       _playerSubscribe = _usecase.Player.Subscribe(UpdatePlayerData);
+      _inputHorizontalMovementSubscribe = inputPresenter.HorizontalMovement.Subscribe(UpdateHorizontalMovement);
 
       UpdatePlayerData(_usecase.Player.Value);
     }
 
-    private void UpdatePlayerData(Entities.Player player)
+    private void UpdateHorizontalMovement(float horizontalMovement)
+    {
+      _horizontalMovement = horizontalMovement;
+      UpdateHorizontalForce();
+    }
+
+    private void UpdateHorizontalForce()
+    {
+      var newHorizontalForce = Vector3.right * (_horizontalSpeed * _horizontalMovement);
+      _horizontalForce.SetValueAndForceNotify(newHorizontalForce);
+    }
+
+    private void UpdatePlayerData(Entities.Player.Player player)
     {
       if (player == null) return;
       
@@ -43,13 +57,10 @@ namespace Diplom.Presenters.Player
       {
         _forwardSpeed.SetValueAndForceNotify(player.ForwardSpeed);
       }
-      if (Math.Abs(_horizontalSpeed.Value - player.HorizontalSpeed) > 0.01f)
+      if (Math.Abs(_horizontalSpeed - player.HorizontalSpeed) > 0.01f)
       {
-        _horizontalSpeed.SetValueAndForceNotify(player.HorizontalSpeed);
-      }
-      if (Math.Abs(_horizontalMovement.Value - player.HorizontalMovement) > 0.01f)
-      {
-        _horizontalMovement.SetValueAndForceNotify(player.HorizontalMovement);
+        _horizontalSpeed = player.HorizontalSpeed;
+        UpdateHorizontalForce();
       }
       if (Math.Abs(_progress.Value - player.Progress) > 0.01f)
       {
@@ -80,11 +91,6 @@ namespace Diplom.Presenters.Player
       _usecase.SetDeadState(isDead);
     }
 
-    public void SetHorizontalMovement(float newHorizontalMovement)
-    {
-      _usecase.SetHorizontalMovement(newHorizontalMovement);
-    }
-
     public void IncreaseSpeed()
     {
       _usecase.IncreaseSpeed();
@@ -100,7 +106,7 @@ namespace Diplom.Presenters.Player
       _usecase.IncreaseProgress();
     }
 
-    public void SetDamage(float damage)
+    public void SetDamage(int damage)
     {
       _usecase.SetDamage(damage);
     }
@@ -118,14 +124,14 @@ namespace Diplom.Presenters.Player
     public void Dispose()
     {
       _forwardSpeed?.Dispose();
-      _horizontalSpeed?.Dispose();
-      _horizontalMovement?.Dispose();
+      _horizontalForce?.Dispose();
       _progress?.Dispose();
       _health?.Dispose();
       _startTime?.Dispose();
       _endTime?.Dispose();
       _isDead?.Dispose();
       _playerSubscribe?.Dispose();
+      _inputHorizontalMovementSubscribe?.Dispose();
     }
 
     #endregion

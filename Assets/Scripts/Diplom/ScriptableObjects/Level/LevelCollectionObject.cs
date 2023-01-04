@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Diplom.Entities;
+using Diplom.Entities.Level;
 using UnityEngine;
 
 namespace Diplom.ScriptableObjects.Level

@@ -1,4 +1,4 @@
-﻿using Diplom.Entities;
+﻿using Diplom.Entities.Level;
 
 namespace Diplom.Presenters.Level
 {

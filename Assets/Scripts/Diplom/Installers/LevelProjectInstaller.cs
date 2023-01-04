@@ -1,6 +1,5 @@
 ﻿using Diplom.Gateway.Level;
 using Diplom.Presenters.Level;
-using Diplom.ScriptableObjects;
 using Diplom.ScriptableObjects.Level;
 using Diplom.Usecases.Level;
 using UnityEngine;

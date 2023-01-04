@@ -1,5 +1,4 @@
 ﻿using Diplom.Gateway.Settings;
-using Diplom.Presenters.MenuSceneUI;
 using Diplom.Presenters.Settings;
 using Diplom.Usecases.Settings;
 using Zenject;

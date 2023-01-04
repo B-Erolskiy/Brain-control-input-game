@@ -9,7 +9,7 @@ namespace Diplom.Views.Player.Movement
   public class PlayerHorizontalMovementView : MonoBehaviour
   {
     private Rigidbody _body;
-    private float _horizontalSpeed, _horizontalMovement;
+    private Vector3 _horizontalForce;
     private IPlayerStatsPresenter _presenter;
 
     [Inject]
@@ -22,24 +22,18 @@ namespace Diplom.Views.Player.Movement
     {
       _body = GetComponent<Rigidbody>();
 
-      _presenter.HorizontalSpeed.Subscribe(UpdateHorizontalSpeed).AddTo(this);
-      _presenter.HorizontalMovement.Subscribe(UpdateHorizontalMovement).AddTo(this);
+      _presenter.HorizontalForce.Subscribe(UpdateHorizontalForce).AddTo(this);
       Observable.EveryFixedUpdate().Subscribe(x => MoveHorizontal()).AddTo(this);
     }
 
-    private void UpdateHorizontalSpeed(float newHorizontalSpeed)
+    private void UpdateHorizontalForce(Vector3 newHorizontalForce)
     {
-      _horizontalSpeed = newHorizontalSpeed;
-    }
-
-    private void UpdateHorizontalMovement(float newHorizontalMovement)
-    {
-      _horizontalMovement = newHorizontalMovement;
+      _horizontalForce = newHorizontalForce;
     }
 
     private void MoveHorizontal()
     {
-      _body.AddForce(Vector3.right * (_horizontalSpeed * _horizontalMovement), ForceMode.Force);
+      _body.AddForce(_horizontalForce, ForceMode.Force);
     }
   }
 }

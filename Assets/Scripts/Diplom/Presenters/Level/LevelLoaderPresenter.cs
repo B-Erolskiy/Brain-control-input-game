@@ -1,4 +1,4 @@
-﻿using Diplom.Entities;
+﻿using Diplom.Entities.Level;
 using Diplom.Usecases.Level;
 using UnityEngine;
 using UnityEngine.SceneManagement;

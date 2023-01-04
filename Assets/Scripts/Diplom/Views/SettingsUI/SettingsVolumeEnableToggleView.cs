@@ -1,5 +1,4 @@
-﻿using Diplom.Presenters.MenuSceneUI;
-using Diplom.Presenters.Settings;
+﻿using Diplom.Presenters.Settings;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;

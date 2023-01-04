@@ -1,7 +1,6 @@
-﻿using Diplom.Entities;
+﻿using Diplom.Entities.Level;
 using Diplom.Presenters.Level;
 using UnityEditor;
-using UnityEngine.SceneManagement;
 
 namespace Diplom.Presenters.MenuSceneUI
 {

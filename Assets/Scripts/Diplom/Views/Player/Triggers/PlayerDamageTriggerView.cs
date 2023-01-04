@@ -9,7 +9,7 @@ namespace Diplom.Views.Player.Triggers
   [RequireComponent(typeof(Collider))]
   public class PlayerDamageTriggerView : MonoBehaviour
   {
-    [SerializeField] private float _damage;
+    [SerializeField] private int _damage = 1;
     [SerializeField] private bool _isTrigger;
     [SerializeField] private List<MeshRenderer> _meshes = new List<MeshRenderer>();
     [SerializeField] private float _hideAfterDamageDuration = 3f;
