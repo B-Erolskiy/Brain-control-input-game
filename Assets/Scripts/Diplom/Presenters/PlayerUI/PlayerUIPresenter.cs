@@ -1,5 +1,5 @@
 ﻿using System;
-using Diplom.Entities;
+using Diplom.Entities.Level;
 using Diplom.Presenters.Level;
 using Diplom.Usecases.Player;
 using UniRx;
@@ -37,7 +37,7 @@ namespace Diplom.Presenters.PlayerUI
       OpenInGameScreen();
     }
 
-    private void UpdatePlayerData(Entities.Player player)
+    private void UpdatePlayerData(Entities.Player.Player player)
     {
       if (!player.IsDead || _isLoseScreenActive.Value) return;
       

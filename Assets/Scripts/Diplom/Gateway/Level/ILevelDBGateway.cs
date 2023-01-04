@@ -1,9 +1,9 @@
-﻿using Diplom.Entities;
+﻿using Diplom.Entities.Level;
 
 namespace Diplom.Gateway.Level
 {
   public interface ILevelDBGateway
   {
-    Entities.Level GetLevelByType(LevelType levelType);
+    Entities.Level.Level GetLevelByType(LevelType levelType);
   }
 }

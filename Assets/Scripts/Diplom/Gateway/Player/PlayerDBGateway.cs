@@ -4,27 +4,20 @@ namespace Diplom.Gateway.Player
 {
   public class PlayerDBGateway : IPlayerDBGateway
   {
-    private readonly Entities.Player _player;
+    private readonly Entities.Player.Player _player;
     
     public PlayerDBGateway()
     {
-      _player = new Entities.Player();
+      _player = new Entities.Player.Player();
     }
 
-    public Entities.Player GetPlayer() => _player;
+    public Entities.Player.Player GetPlayer() => _player;
 
     public float GetForwardSpeed() => _player.ForwardSpeed;
 
     public void SetForwardSpeed(float newForwardSpeed)
     {
       _player.ForwardSpeed = newForwardSpeed;
-    }
-    
-    public float GetHorizontalMovement() => _player.HorizontalMovement;
-
-    public void SetHorizontalMovement(float newHorizontalMovement)
-    {
-      _player.HorizontalMovement = newHorizontalMovement;
     }
 
     public float GetHorizontalSpeed() => _player.HorizontalSpeed;
@@ -34,16 +27,16 @@ namespace Diplom.Gateway.Player
       _player.HorizontalSpeed = newHorizontalSpeed;
     }
 
-    public float GetProgress() => _player.Progress;
+    public int GetProgress() => _player.Progress;
 
-    public void SetProgress(float newProgressValue)
+    public void SetProgress(int newProgressValue)
     {
       _player.Progress = newProgressValue;
     }
 
-    public float GetHealth() => _player.Health;
+    public int GetHealth() => _player.Health;
 
-    public void SetHealth(float newHealthValue)
+    public void SetHealth(int newHealthValue)
     {
       _player.Health = newHealthValue;
     }

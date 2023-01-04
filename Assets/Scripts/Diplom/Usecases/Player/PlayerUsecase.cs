@@ -1,14 +1,13 @@
 ﻿using System;
 using Diplom.Gateway.Player;
 using UniRx;
-using UnityEngine;
 
 namespace Diplom.Usecases.Player
 {
   public class PlayerUsecase : IPlayerUsecase
   {
-    public IReadOnlyReactiveProperty<Entities.Player> Player => _player;
-    private readonly ReactiveProperty<Entities.Player> _player = new ReactiveProperty<Entities.Player>();
+    public IReadOnlyReactiveProperty<Entities.Player.Player> Player => _player;
+    private readonly ReactiveProperty<Entities.Player.Player> _player = new ReactiveProperty<Entities.Player.Player>();
     
     private const float MinForwardSpeed = 5f, MaxForwardSpeed = 30f, ForwardSpeedStep = 1f;
     private const float MinHorizontalSpeed = 8f, MaxHorizontalSpeed = 17f, HorizontalSpeedStep = 0.6f;
@@ -20,16 +19,6 @@ namespace Diplom.Usecases.Player
       _gateway = gateway;
       
       var player = gateway.GetPlayer();
-      _player.SetValueAndForceNotify(player);
-    }
-    
-    public void SetHorizontalMovement(float horizontalMovement)
-    {
-      var newHorizontalMovement = Mathf.Clamp(horizontalMovement, -1, 1);
-      _gateway.SetHorizontalMovement(newHorizontalMovement);
-      
-      var player = _player.Value;
-      player.HorizontalMovement = newHorizontalMovement;
       _player.SetValueAndForceNotify(player);
     }
     
@@ -78,7 +67,7 @@ namespace Diplom.Usecases.Player
       _player.SetValueAndForceNotify(player);
     }
 
-    public void SetDamage(float damage)
+    public void SetDamage(int damage)
     {
       var health = _gateway.GetHealth();
       var newHealth = Math.Max(health - damage, 0);

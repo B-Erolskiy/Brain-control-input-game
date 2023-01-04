@@ -4,11 +4,11 @@ namespace Diplom.Gateway.Settings
 {
   public class SettingsDBGateway : ISettingsDBGateway
   {
-    private readonly Entities.Settings _settings;
+    private readonly Entities.Settings.Settings _settings;
 
     public SettingsDBGateway()
     {
-      _settings = GetSettingsFromSave() ?? new Entities.Settings();
+      _settings = GetSettingsFromSave() ?? new Entities.Settings.Settings();
     }
 
     public float GetTotalVolume() => _settings.TotalVolume;
@@ -29,13 +29,13 @@ namespace Diplom.Gateway.Settings
 
     #region Save to local prefs
 
-    private Entities.Settings GetSettingsFromSave()
+    private Entities.Settings.Settings GetSettingsFromSave()
     {
       var json = PlayerPrefs.GetString("Settings");
       var settingsPrefsDTO = JsonUtility.FromJson<SettingsPrefsDTO>(json);
       if (settingsPrefsDTO == null) return null;
 
-      var savedSettings = new Entities.Settings
+      var savedSettings = new Entities.Settings.Settings
       {
         TotalVolume = settingsPrefsDTO.TotalVolume,
         IsVolumeEnabled = settingsPrefsDTO.IsVolumeEnabled

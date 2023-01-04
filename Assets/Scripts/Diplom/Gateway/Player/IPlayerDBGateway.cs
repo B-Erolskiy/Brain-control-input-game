@@ -4,17 +4,15 @@ namespace Diplom.Gateway.Player
 {
   public interface IPlayerDBGateway
   {
-    Entities.Player GetPlayer();
+    Entities.Player.Player GetPlayer();
     float GetForwardSpeed();
     void SetForwardSpeed(float newForwardSpeed);
     float GetHorizontalSpeed();
-    float GetHorizontalMovement();
-    void SetHorizontalMovement(float newHorizontalMovement);
     void SetHorizontalSpeed(float newHorizontalSpeed);
-    float GetProgress();
-    void SetProgress(float newProgressValue);
-    float GetHealth();
-    void SetHealth(float newHealthValue);
+    int GetProgress();
+    void SetProgress(int newProgressValue);
+    int GetHealth();
+    void SetHealth(int newHealthValue);
     DateTime GetStartTime();
     void SetStartTime(DateTime newStartTime);
     DateTime GetEndTime();

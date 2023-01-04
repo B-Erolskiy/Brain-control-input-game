@@ -1,4 +1,4 @@
-﻿using Diplom.Entities;
+﻿using Diplom.Entities.Level;
 using Diplom.Gateway.Level;
 
 namespace Diplom.Usecases.Level
@@ -12,7 +12,7 @@ namespace Diplom.Usecases.Level
       _gateway = gateway;
     }
     
-    public Entities.Level GetLevelByType(LevelType levelType)
+    public Entities.Level.Level GetLevelByType(LevelType levelType)
     {
       var level = _gateway.GetLevelByType(levelType);
       return level;

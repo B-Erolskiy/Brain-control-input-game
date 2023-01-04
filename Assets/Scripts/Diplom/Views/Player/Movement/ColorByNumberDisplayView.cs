@@ -18,26 +18,26 @@ namespace Diplom.Views.Player.Movement
     [Header("Color display")]
     [SerializeField] private Graphic _graphic;
 
-    public void SetNumber(float number)
+    public void SetNumber(float number, float checkNumber)
     {
       bool checkResult;
 
       switch (_checkType)
       {
         case CheckType.More:
-          checkResult = number > _checkNumber;
+          checkResult = number > checkNumber;
           break;
         case CheckType.Less:
-          checkResult = number < _checkNumber;
+          checkResult = number < checkNumber;
           break;
         case CheckType.Equal:
-          checkResult = Math.Abs(number - _checkNumber) < _tolerance;
+          checkResult = Math.Abs(number - checkNumber) < _tolerance;
           break;
         case CheckType.MoreOrEqual:
-          checkResult = number >= _checkNumber;
+          checkResult = number >= checkNumber;
           break;
         case CheckType.LessOrEqual:
-          checkResult = number <= _checkNumber;
+          checkResult = number <= checkNumber;
           break;
         default:
           checkResult = false;
@@ -45,6 +45,11 @@ namespace Diplom.Views.Player.Movement
       }
 
       _graphic.color = checkResult ? _successCheckColor : _failedCheckColor;
+    }
+
+    public void SetNumber(float number)
+    {
+      SetNumber(number, _checkNumber);
     }
     
     public enum CheckType : byte
