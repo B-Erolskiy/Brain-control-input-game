@@ -26,5 +26,11 @@ namespace Diplom.Presenters.Level
       var levelSceneID = level.SceneID;
       SceneManager.LoadScene(levelSceneID);
     }
+
+    public void ReloadCurrentLevel()
+    {
+      var activeScene = SceneManager.GetActiveScene();
+      SceneManager.LoadScene(activeScene.buildIndex);
+    }
   }
 }

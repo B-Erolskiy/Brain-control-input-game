@@ -8,7 +8,8 @@ namespace Diplom.Views.MenuSceneUI
 {
   public class MenuButtonsPanelView : MonoBehaviour
   {
-    [SerializeField] private Button _startGameButton;
+    [SerializeField] private Button _startEasyLevelButton;
+    [SerializeField] private Button _startHardLevelButton;
     [SerializeField] private Button _settingsButton;
     [SerializeField] private Button _quitButton;
     
@@ -22,7 +23,8 @@ namespace Diplom.Views.MenuSceneUI
 
     private void Start()
     {
-      _startGameButton.OnClickAsObservable().Subscribe(_ => _presenter.StartGame());
+      _startEasyLevelButton.OnClickAsObservable().Subscribe(_ => _presenter.StartEasyLevel());
+      _startHardLevelButton.OnClickAsObservable().Subscribe(_ => _presenter.StartHardLevel());
       _settingsButton.OnClickAsObservable().Subscribe(_ => _presenter.OpenSettings());
       _quitButton.OnClickAsObservable().Subscribe(_ => _presenter.QuitGame());
     }

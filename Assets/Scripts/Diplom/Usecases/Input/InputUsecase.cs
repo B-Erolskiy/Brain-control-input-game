@@ -30,6 +30,8 @@ namespace Diplom.Usecases.Input
       var inputData = gateway.GetInputData();
       _input.SetValueAndForceNotify(inputData);
 
+      SetInputType(InputType.Keyboard);
+
       _subscribeKeyboardInput = keyboardInputUsecase.KeyboardHorizontalMovement.Subscribe(UpdateKeyboardHorizontalMovement);
       _subscribeBrainStats = brainStatsUsecase.BrainStats.Subscribe(UpdateBrainStatsMovement);
     }
@@ -38,7 +40,9 @@ namespace Diplom.Usecases.Input
     {
       if (!_input.HasValue || _input.Value.InputType != InputType.Brain) return;
 
-      var newBrainHorizontalMovement = newBrainStats.ConcentrationPercent > newBrainStats.MeditationPercent ? 1 : -1;
+      var newBrainHorizontalMovement = 
+        Math.Abs(newBrainStats.ConcentrationPercent - newBrainStats.MeditationPercent) < 1 ? 0 
+          : newBrainStats.ConcentrationPercent > newBrainStats.MeditationPercent ? 1 : -1;
       SetHorizontalMovement(newBrainHorizontalMovement);
     }
 
