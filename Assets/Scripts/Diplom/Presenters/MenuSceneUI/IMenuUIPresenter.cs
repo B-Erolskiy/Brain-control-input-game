@@ -2,7 +2,8 @@
 {
   public interface IMenuUIPresenter
   {
-    void StartGame();
+    void StartEasyLevel();
+    void StartHardLevel();
     void OpenSettings();
     void QuitGame();
   }

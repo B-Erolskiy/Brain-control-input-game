@@ -15,7 +15,7 @@ MonoBehaviour:
   _levelsCollection:
   - LevelType: 0
     SceneID: 0
-  - LevelType: 2
-    SceneID: 1
   - LevelType: 1
     SceneID: 2
+  - LevelType: 2
+    SceneID: 1

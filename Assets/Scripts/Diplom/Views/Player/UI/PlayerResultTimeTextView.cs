@@ -28,7 +28,10 @@ namespace Diplom.Views.Player.UI
     private void SetResultTime()
     {
       var resultTime = _presenter.GetResultTime();
-      _text.text = $"Result time: {resultTime:g}";
+      var formattedTime =
+        $"{resultTime.Hours:D2}:{resultTime.Minutes:D2}:{resultTime.Seconds:D2}.{resultTime.Milliseconds:D3}";
+      
+      _text.text = $"Result time: {formattedTime}";
     }
   }
 }
